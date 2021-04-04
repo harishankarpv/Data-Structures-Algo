@@ -184,6 +184,20 @@ void preorder(BTNode<int>* root, vector<int> &ans){
         return ans;
     } 
 
+//post order traversal
+void postorder(BTNode<int>* root, vector<int> &ans){
+    if(root == nullptr){
+        return;
+    }
+    postorder(root->left, ans);
+    postorder(root->right, ans);
+    ans.push_back(root->data);
+    }
+    vector<int> postorderTraversal(BTNode<int>* root){
+        vector<int> ans;
+        postorder(root, ans);
+        return ans;
+    } 
 
 int main(){
 
@@ -219,6 +233,13 @@ int main(){
     vector<int> preOrder = preorderTraversal(root);
     for(int i=0; i<preOrder.size(); i++){
         cout<<preOrder[i]<<" ";
+    }
+    cout<<endl;
+
+    cout<<"\nPostorder traversal\n";
+    vector<int> postOrder = postorderTraversal(root);
+    for(int i=0; i<postOrder.size(); i++){
+        cout<<postOrder[i]<<" ";
     }
     cout<<endl;
 
