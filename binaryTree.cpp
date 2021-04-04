@@ -199,6 +199,16 @@ void postorder(BTNode<int>* root, vector<int> &ans){
         return ans;
     } 
 
+// max-depth of BT
+int maxdepth(BTNode<int>* root){
+    if(root == nullptr) return 0;
+
+    int left_depth = maxdepth(root->left);
+    int right_depth = maxdepth(root->right);
+
+    return max(left_depth, right_depth)+1;
+}
+
 int main(){
 
     // BTNode<int>* root = new BTNode<int>(1);
@@ -227,21 +237,23 @@ int main(){
     for(int i=0; i<inOrder.size(); i++){
         cout<<inOrder[i]<<" ";
     }
-    cout<<endl;
+    
 
     cout<<"\nPreorder traversal\n";
     vector<int> preOrder = preorderTraversal(root);
     for(int i=0; i<preOrder.size(); i++){
         cout<<preOrder[i]<<" ";
     }
-    cout<<endl;
+    
 
     cout<<"\nPostorder traversal\n";
     vector<int> postOrder = postorderTraversal(root);
     for(int i=0; i<postOrder.size(); i++){
         cout<<postOrder[i]<<" ";
     }
-    cout<<endl;
+
+    cout<<"\nMax Depth of Binary Tree:"<<maxdepth(root)<<endl;
+     
 
     delete root;
     return 0;
