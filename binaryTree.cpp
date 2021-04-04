@@ -209,6 +209,24 @@ int maxdepth(BTNode<int>* root){
     return max(left_depth, right_depth)+1;
 }
 
+// check Binary Tree is Symmetric
+bool checksymmetry(BTNode<int>* lsub_tree, BTNode<int>* rsub_tree){
+    if(lsub_tree==NULL && rsub_tree!=NULL) return false;
+        if(lsub_tree!=NULL && rsub_tree==NULL) return false;
+        if(lsub_tree==NULL && rsub_tree==NULL) return true;
+        
+        if(lsub_tree->data != rsub_tree->data) return false;
+        
+        
+        return checksymmetry(lsub_tree->left,rsub_tree->right) &&
+               checksymmetry(lsub_tree->right,rsub_tree->left);
+}
+bool issymmetric(BTNode<int>* root){
+    if(root==nullptr) return true;
+    return checksymmetry(root->left, root->right);
+}
+    
+
 int main(){
 
     // BTNode<int>* root = new BTNode<int>(1);
@@ -253,7 +271,14 @@ int main(){
     }
 
     cout<<"\nMax Depth of Binary Tree:"<<maxdepth(root)<<endl;
-     
+    cout<<endl;
+
+    bool flag = issymmetric(root);
+    if(flag == true){
+        cout<<"\nBinart Tree is Symmetric\n";
+    }else{
+        cout<<"\nBinary Tree is Not Symmetric\n";
+    }
 
     delete root;
     return 0;
