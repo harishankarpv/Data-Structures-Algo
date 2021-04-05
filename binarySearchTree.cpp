@@ -2,16 +2,15 @@
 
 using namespace std;
 
-template<typename T>
 class BSTNode{
     public:
-    T data;
+    int data;
     BSTNode* left;
     BSTNode* right;
 
     BSTNode() : data(0), left(nullptr), right(nullptr) {}
-    BSTNode(T data) : data(data), left(nullptr), right(nullptr) {}
-    BSTNode(T data, BSTNode* left, BSTNode* right): data(data), left(left), right(right) {}
+    BSTNode(int data) : data(data), left(nullptr), right(nullptr) {}
+    BSTNode(int data, BSTNode* left, BSTNode* right): data(data), left(left), right(right) {}
 
     ~BSTNode(){
         delete left;
@@ -20,20 +19,20 @@ class BSTNode{
 };
 
 // create BST from sorted input array
-BSTNode<int>* createBST(vector<int>& arr, int s, int e){
+BSTNode* createBST(vector<int>& arr, int s, int e){
     if(s>e){
         return nullptr;
     }
     int mid = (s+e)/2;
     int rootdata = arr[mid];
-    BSTNode<int>* root = new BSTNode<int>(rootdata);
+    BSTNode* root = new BSTNode(rootdata);
     root->left = createBST(arr, s, mid-1);
     root->right = createBST(arr, mid+1, e);
 
     return root;
 }
 
-BSTNode<int>* searchBST(BSTNode<int>* root, int val){
+BSTNode* searchBST(BSTNode* root, int val){
 
     // 1. Recursive approach
     if(root == nullptr)return nullptr;
@@ -62,7 +61,7 @@ BSTNode<int>* searchBST(BSTNode<int>* root, int val){
 }
 
 // min key in BST
-int minBST(BSTNode<int>* root){
+int minBST(BSTNode* root){
     if(root == nullptr)return -1;
     while(root->left){
         root=root->left;
@@ -71,7 +70,7 @@ int minBST(BSTNode<int>* root){
 }
 
 // max key in BST
-int maxBST(BSTNode<int>* root){
+int maxBST(BSTNode* root){
     if(root==nullptr)return -1;
     while(root->right){
         root=root->right;
@@ -80,7 +79,7 @@ int maxBST(BSTNode<int>* root){
 }
 
 // range sum in BST
-int rangeSumBST(BSTNode<int>* root, int low, int high){
+int rangeSumBST(BSTNode* root, int low, int high){
     if(root==nullptr)return 0;
     int sum =0;
 
@@ -99,7 +98,7 @@ int rangeSumBST(BSTNode<int>* root, int low, int high){
 }
 
 // check if BT is BST
-bool isBST(BSTNode<int>* root, long long minV= -1e10, long long maxV = 1e10){
+bool isBST(BSTNode* root, long long minV= -1e10, long long maxV = 1e10){
     if(root==nullptr)return true;
 
     bool left = isBST(root->left, minV, root->data);
@@ -112,19 +111,19 @@ bool isBST(BSTNode<int>* root, long long minV= -1e10, long long maxV = 1e10){
 }
 
 // level order
-vector<vector<int>> levelOrderTraversal(BSTNode<int>* root){
+vector<vector<int>> levelOrderTraversal(BSTNode* root){
     vector<vector<int> > v;
         if(root==nullptr){
             return v;
         }
         vector<int> tmp;   /// tmp is storing result of current level
         
-        queue<BSTNode<int>*> q;
+        queue<BSTNode*> q;
         q.push(root);
         q.push(nullptr);
 
     while(!q.empty()){
-        BSTNode<int>* f = q.front();
+        BSTNode* f = q.front();
         q.pop();
 
         if(f==nullptr){
@@ -151,28 +150,28 @@ return v;
 
 int main(){
 
-vector<int> array {1,2,3,4,5,6,7};
-int n = array.size();
-BSTNode<int>* root = createBST(array,0,n-1);
+    vector<int> array {1,2,3,4,5,6,7};
+    int n = array.size();
+    BSTNode* root = createBST(array,0,n-1);
 
-vector<vector<int>> v = levelOrderTraversal(root);
-    cout<<"BST - Level Order Traversal\n";
-    for(int i=0; i<v.size(); i++){
-        for(auto it = v[i].begin(); it != v[i].end(); it++){
-            cout<<*it<<" ";
+    vector<vector<int>> v = levelOrderTraversal(root);
+        cout<<"BST - Level Order Traversal\n";
+        for(int i=0; i<v.size(); i++){
+            for(auto it = v[i].begin(); it != v[i].end(); it++){
+                cout<<*it<<" ";
+            }
+            cout<<endl;
         }
-        cout<<endl;
-    }
 
-cout<<"\nValue contained in node returned by search is: "<<searchBST(root,4)->data<<endl;
+    cout<<"\nValue contained in node returned by search is: "<<searchBST(root,4)->data<<endl;
 
-cout<<"\nMin value in BST: "<<minBST(root)<<endl;
-cout<<"\nMax value in BST: "<<maxBST(root)<<endl;
+    cout<<"\nMin value in BST: "<<minBST(root)<<endl;
+    cout<<"\nMax value in BST: "<<maxBST(root)<<endl;
 
-cout<<"\nSum within range [3,7] is: "<<rangeSumBST(root,3,7)<<endl;
+    cout<<"\nSum within range [3,7] is: "<<rangeSumBST(root,3,7)<<endl;
 
-bool flag = isBST(root);
-if(flag == true) {cout<<"BT is BST\n"; }
-else cout<<"\nBT is not BST\n";
+    bool flag = isBST(root);
+    if(flag == true) {cout<<"BT is BST\n"; }
+    else cout<<"\nBT is not BST\n";
 
 }

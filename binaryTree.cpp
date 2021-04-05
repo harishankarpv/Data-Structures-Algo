@@ -7,20 +7,18 @@ using namespace std;
 template <typename T>
 class BTNode{
     public:
-        T data;
-        BTNode* left;
-        BTNode* right;
+    T data;
+    BTNode* left;
+    BTNode* right;
 
-        BTNode(T data){
-            this->data = data;
-            left = nullptr;
-            right = nullptr;
-        }
+    BTNode() : data(0), left(nullptr), right(nullptr) {}
+    BTNode(T data) : data(data), left(nullptr), right(nullptr) {}
+    BTNode(T data, BTNode* left, BTNode* right): data(data), left(left), right(right) {}
 
-        ~BTNode(){  //recursive constructor
-            delete left;  // delete calls the destructor
-            delete right;
-        }
+    ~BTNode(){
+        delete left;
+        delete right;
+    }
 };
 
 void printBTreeRecursive(BTNode<int>* root){
